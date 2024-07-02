@@ -7,7 +7,7 @@ exports.home=(req,res)=>{
 }
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const User = require("../models/userModel");
-const Product = require("../models/productModel");
+// const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
