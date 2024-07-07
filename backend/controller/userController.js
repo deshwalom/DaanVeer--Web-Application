@@ -17,9 +17,9 @@ const cloudinary = require("cloudinary")
 // register a user
 exports.registerUser = catchAsyncErrors(async (req,res,next)=>{
     if(!req.body.avatar){
-        const {name,email,password} = req.body;
+        const {name,email,password,age,gender,mobile,address,district} = req.body;
         const user = await User.create({
-            name,email,password,avatar:{
+            name,email,password,age,gender,mobile,address,district,avatar:{
                 public_id:"null",
                 url:"null",
             }

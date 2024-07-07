@@ -17,6 +17,11 @@ const userSchema=new mongoose.Schema({
         required:[true,"Email is required"],
         unique:true
     },
+    password:{
+      default:"temporaryPassword",
+      type:String,
+      required:[true,"Please enter your password"],
+     },
     gender:{
       type:String,
       required:[true,"Specify your gender"]
