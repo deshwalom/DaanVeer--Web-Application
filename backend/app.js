@@ -2,6 +2,7 @@ const express=require("express");
 const cors=require("cors");
 const userRoutes=require("./routes/userRoutes");
 const donationRoutes=require("./routes/donationRoutes");
+const orgRoutes=require("./routes/orgRoutes");
 // import records from "./routes/record.js";
 
 
@@ -15,5 +16,6 @@ app.get("/check",(req,res)=>{
 })
 app.use("/user", userRoutes);
 app.use("/donation",donationRoutes);
+app.use("/org",orgRoutesRoutes);
 
 module.exports = app;

@@ -7,11 +7,18 @@ const donationSchema=new mongoose.Schema({
         minLength: [2, "Item name is too short"]
 
     },
-    itemImages: {
-        type: String,
-        required: [true, "Item image is required"],
-        unique: true
-      },
+    itemImages:[
+      {
+          public_id:{
+              type:String,
+              required:true
+          },
+          url:{
+              type:String,
+              required:true
+          }
+      }
+  ],
     donationStatus: {
         type: String,
         default: "Pending",
