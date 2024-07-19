@@ -19,6 +19,10 @@ const donationSchema=new mongoose.Schema({
           }
       }
   ],
+  quantity:{
+    type: Number,
+    default: 1
+  },
     donationStatus: {
         type: String,
         default: "Pending",
@@ -26,7 +30,11 @@ const donationSchema=new mongoose.Schema({
       },
     donatorId: {
         type: String,
-        required: [true, "Donator ID is required"]
+        default: "",
+      },
+      orgId: {
+        type: String,
+        default: "",
       },
     categoryOfItem: {
         type: String,
@@ -43,7 +51,7 @@ const donationSchema=new mongoose.Schema({
     deliveryMode: {
         type: String,
         required: [true, "Delivery mode is required"]
-      }
+      },
     });
 
  module.exports = mongoose.model('Donation', donationSchema);
