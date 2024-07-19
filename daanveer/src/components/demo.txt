@@ -1,0 +1,147 @@
+<Dialog
+                        open={open}
+                        onClose={handleClose}
+                        PaperProps={{
+                          component: 'form',
+                          onSubmit: async (event) => {
+                            event.preventDefault();
+                            const formData = new FormData(event.currentTarget);
+                            console.log(formData)
+                            const formJson = Object.fromEntries((formData).entries());
+
+                            console.log(formJson)
+                            try {
+                              const updatedTask = await updateTaskByID({ id: currTask._id, credentials: formJson }).unwrap();
+                              console.log(updatedTask)
+                              const fetchTasks = async ()=>{
+                                dispatch(setLoading({loading : true}));
+                                const result = await getMyTasks(0);
+                                // setTasks(result.data.data);
+                                  console.log(result.data.data);
+                                  dispatch(setTasks({tasks: result.data.data}));
+                                  dispatch(setLoading({loading : false}));
+                              }
+                              fetchTasks();
+                              
+                              handleClose();
+                            } catch (error) {
+                              console.error('Failed to update task:', error);
+                            }
+                          },
+                        }}
+                      >
+                        <DialogTitle>{currTask.desc}</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We
+                            will send updates occasionally.
+                          </DialogContentText>
+                          {/* <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="name"
+                            name="email"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                          /> */}
+                          <TextField
+          label="Title"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          name="title"
+          value={currTask.title}
+          onChange={handleChange}
+          // error={!!errors.title}
+          // helperText={errors.title}
+        />
+        <TextField
+          label="Description"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          name="desc"
+          value={currTask.desc}
+          onChange={handleChange}
+          // error={!!errors.desc}
+          // helperText={errors.desc}
+        />
+       {user && user.role === "ADMIN" ? 
+       <FormControl fullWidth margin="normal" 
+       //error={!!errors.assignedTo}
+       >
+          <InputLabel id="assignedTo-label">Assign To</InputLabel>
+          <Select
+            labelId="assignedTo-label"
+            name="assignedTo"
+            label= "Assign To"
+            value={currTask.assignedTo}
+            onChange={handleChange}
+          >
+            {/* {users.filter(user => user.isActive).map((user) => (
+              <MenuItem key={user._id} value={user._id}>
+                {user.name}
+              </MenuItem>
+            ))} */}
+          </Select>
+          {/* <FormHelperText>{errors.assignedTo}</FormHelperText> */}
+        </FormControl>
+        :""}
+        <TextField
+          label="Estimation Hours"
+          type="number"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          name="estTime"
+          value={currTask.estTime}
+          onChange={handleChange}
+          // error={!!errors.estTime}
+          // helperText={errors.estTime}
+        />
+        <FormControl fullWidth margin="normal" 
+        // error={!!errors.priority}
+        >
+          <InputLabel id="priority-label">Priority</InputLabel>
+          <Select
+            labelId="priority-label"
+            name="priority"
+            label= "Priority"
+            value={currTask.priority}
+            onChange={handleChange}
+          >
+            <MenuItem value="NORMAL">Normal</MenuItem>
+            <MenuItem value="LOW">Low</MenuItem>
+            <MenuItem value="MEDIUM">Medium</MenuItem>
+            <MenuItem value="HIGH">High</MenuItem>
+          </Select>
+          {/* <FormHelperText>{errors.priority}</FormHelperText> */}
+        </FormControl>
+
+        <FormControl fullWidth margin="normal" 
+        // error={!!errors.priority}
+        >
+          <InputLabel id="progress-label">Progress</InputLabel>
+          <Select
+            labelId="progress-label"
+            name="stage"
+            label= "Progress"
+            value={currTask.stage}
+            onChange={handleChange}
+          >
+            <MenuItem value="TODO">TODO</MenuItem>
+            <MenuItem value="IN_PROGRESS">IN PROGRESS</MenuItem>
+            <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+          </Select>
+          {/* <FormHelperText>{errors.priority}</FormHelperText> */}
+        </FormControl>
+
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button type="submit">Apply Changes</Button>
+                        </DialogActions>
+                      </Dialog>
